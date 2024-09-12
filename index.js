@@ -25,27 +25,38 @@ let offsets = [
 ];
 
 function knightMoves(start, end) {
-  // let visited = new Array(64).fill(false);
-  let visited = [start];
-  let queue = [start];
+  let visited = Array.from({ length: 8 }, () => Array(8).fill(false));
+  let queue = [];
 
-  // while (queue) {
-  let curr = queue.shift();
+  visited[start[0]][start[1]] = true;
+  queue.push(start);
 
-  // If current coordinate + offset is on the board, push the resulting corrdinate into queue and visited array
-  offsets.forEach(([x, y]) => {
-    if (
-      curr[0] + x >= 0 &&
-      curr[0] + x < 8 &&
-      curr[1] + y >= 0 &&
-      curr[1] + y < 8
-    ) {
-      visited.push([curr[0] + x, curr[1] + y]);
-      queue.push([curr[0] + x, curr[1] + y]);
-    }
-  });
+  console.log(queue);
+
+  let i = 0;
+  while (queue.length) {
+    // console.log(queue);
+    let curr = queue.shift();
+    // If current coordinate + offset is on the board and not already visited, push the resulting coordinate into queue and visited array
+    offsets.forEach(([x, y]) => {
+      // console.log(queue);
+      // console.log(`visited: ${visited[curr[0] + x][curr[1] + y]}`);
+      // console.log(`${[curr[0] + x, curr[1] + y]}`);
+      if (
+        curr[0] + x >= 0 &&
+        curr[0] + x < 8 &&
+        curr[1] + y >= 0 &&
+        curr[1] + y < 8 &&
+        !visited[curr[0] + x][curr[1] + y]
+        // !visited.includes([curr[0] + x, curr[1] + y])
+      ) {
+        visited[curr[0] + x][curr[1] + y] = true;
+        queue.push([curr[0] + x, curr[1] + y]);
+      }
+    });
+    i++;
+  }
   return queue;
-  // }
 }
 
 console.log(knightMoves([0, 0], [3, 3]));
