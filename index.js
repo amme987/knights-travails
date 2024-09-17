@@ -27,7 +27,12 @@ function knightMoves(start, end) {
 
     // If the coordinate is the end coordinate, return the path
     if (curr[0] === end[0] && curr[1] === end[1]) {
-      return path;
+      // Format 'path' since template literal converts it to a string
+      const formattedPath = path
+        .map(subArray => `[${subArray.join(', ')}]`)
+        .join(' -> ');
+      return `You made it in ${path.length} moves! Here's your path: 
+      ${formattedPath}`;
     }
 
     // If neighbor (current coordinate + offset) is on the board and not already visited
